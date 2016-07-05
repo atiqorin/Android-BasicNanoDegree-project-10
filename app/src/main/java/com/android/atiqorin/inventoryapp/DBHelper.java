@@ -145,10 +145,13 @@ public class DBHelper extends SQLiteOpenHelper {
         int previousQunatity = getQuantity(id);
         int previousSales = gettingSales(id);
         ContentValues values = new ContentValues();
-        values.put(KEY_QUANTITY, (previousQunatity - 1));
-        values.put(KEY_SALES, (previousSales + 1));
-        return db.update(TABLE_NAME, values, KEY_ID + " = " + id,
-                null);
+        if(previousQunatity - 1 >= 0) {
+            values.put(KEY_QUANTITY, (previousQunatity - 1));
+            values.put(KEY_SALES, (previousSales + 1));
+            return db.update(TABLE_NAME, values, KEY_ID + " = " + id,
+                    null);
+        }
+        return id;
     }
 
     public int getQuantity(int id) {
@@ -172,9 +175,12 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         int previousQunatity = getQuantity(id);
         ContentValues values = new ContentValues();
-        values.put(KEY_QUANTITY, (previousQunatity - 1));
-        return db.update(TABLE_NAME, values, KEY_ID + " = " + id,
-                null);
+        if(previousQunatity - 1 >=0) {
+            values.put(KEY_QUANTITY, (previousQunatity - 1));
+            return db.update(TABLE_NAME, values, KEY_ID + " = " + id,
+                    null);
+        }
+        return id;
     }
 
     public void deleteInventory(int id) {
