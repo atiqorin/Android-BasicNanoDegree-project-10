@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -39,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Inventory> dataPOJO;
     DBHelper sqlHelper;
     ListView inventory;
-
+    TextView info;
+    RelativeLayout infoLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         DBHelper db = new DBHelper(this);
         int count = db.getCount();
-        if(count == 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Add Items");
-            builder.setMessage("Click on plus button on bottom");
-            builder.show();
+        if(count != 0) {
+            info = (TextView)findViewById(R.id.info);
+            info.setVisibility(View.GONE);
         }
         sqlHelper = new DBHelper(MainActivity.this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -149,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void refresh() {
         InventoryAdapter adapter = new InventoryAdapter(MainActivity.this, sqlHelper.getInventory());
+        DBHelper db = new DBHelper(this);
+        int count = db.getCount();
+        info = (TextView)findViewById(R.id.info);
+        if(count != 0) {
+            info.setVisibility(View.GONE);
+        } else{
+            info.setVisibility(View.VISIBLE);
+        }
         inventory.setAdapter(adapter);
     }
         @Override
