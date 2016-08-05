@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     String imageName = "Item_";
     Button imageCaputre;
     LinearLayout dialogLayout;
-    ArrayList<Inventory> dataPOJO;
+    ArrayList<Inventory> dataObject;
     DBHelper sqlHelper;
     ListView inventory;
     TextView info;
@@ -57,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         sqlHelper = new DBHelper(MainActivity.this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         inventory = (ListView) findViewById(R.id.appInventorLV);
-        dataPOJO = sqlHelper.getInventory();
-        inventory.setAdapter(new InventoryAdapter(MainActivity.this, dataPOJO));
+        dataObject = sqlHelper.getInventory();
+        inventory.setAdapter(new InventoryAdapter(MainActivity.this, dataObject));
         imageName += imageName + sqlHelper.getCount();
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dialogLayout = new LinearLayout(MainActivity.this);
                 dialogLayout.setOrientation(LinearLayout.VERTICAL);
-
                 name = new EditText(MainActivity.this);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 name.setHint("Enter product name");
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogLayout.addView(price);
                 emailID = new EditText(MainActivity.this);
                 final LinearLayout.LayoutParams emailIdParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                emailID.setHint("Enter Suppliers Email Id");
+                emailID.setHint("Enter Supplier Email Id");
                 emailID.setLayoutParams(emailIdParams);
                 dialogLayout.addView(emailID);
                 imageCaputre = new Button(MainActivity.this);
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Entry Cancelled!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Entry Cancelled", Toast.LENGTH_LONG).show();
 
                     }
                 }).create().show();
@@ -211,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     public void modifyInventory(View v) {
         int id = Integer.parseInt(v.getTag().toString());
         sqlHelper.modifyitemsSalesStats(id);
-        Toast.makeText(MainActivity.this, "Item Sold!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Item Sold", Toast.LENGTH_SHORT).show();
         refresh();
     }
     public final static boolean isValidEmail(CharSequence target) {

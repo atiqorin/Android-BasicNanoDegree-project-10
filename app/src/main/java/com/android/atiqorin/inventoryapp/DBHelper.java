@@ -16,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     Context context;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_INVENTORY = "Inventory";
+    private static final String TABLE_NAME = "inventorydata";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_QUANTITY = "quantity";
@@ -23,7 +24,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_SALES = "sales";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_IMAGEPATH = "imagepath";
-    private static final String TABLE_NAME = "inventorydata";
 
     public DBHelper(Context context) {
         super(context, DATABASE_INVENTORY, null, DATABASE_VERSION);
@@ -33,8 +33,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE inventorydata ( " + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, " +
-                "quantity TEXT," + "price TEXT," + "sales TEXT," + " email TEXT," + "imagepath TEXT  )";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE inventorydata ( "
+                + KEY_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_NAME +" TEXT, "
+                + KEY_QUANTITY +" TEXT,"
+                + KEY_PRICE + " TEXT,"
+                + KEY_SALES + " TEXT,"
+                + KEY_EMAIL +"  TEXT,"
+                + KEY_IMAGEPATH + " TEXT  )";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -156,7 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public int getQuantity(int id) {
 
-        String selectQuery = "SELECT  quantity FROM " + TABLE_NAME + " WHERE id=" + id + " LIMIT 1";
+        String selectQuery = "SELECT "+ KEY_QUANTITY +" FROM " + TABLE_NAME + " WHERE id=" + id + " LIMIT 1";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

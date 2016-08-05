@@ -18,14 +18,14 @@ import java.util.ArrayList;
  * Created by atiqorin on 7/4/16.
  */
 public class InventoryAdapter extends BaseAdapter {
-    ArrayList<Inventory> InvnetoryPOJO;
+    ArrayList<Inventory> inventoryObject;
     Context context;
     File imgFile;
 
 
-    public InventoryAdapter(Context context, ArrayList<Inventory> InvnetoryPOJO) {
+    public InventoryAdapter(Context context, ArrayList<Inventory> inventoryObject) {
         this.context = context;
-        this.InvnetoryPOJO = InvnetoryPOJO;
+        this.inventoryObject = inventoryObject;
     }
 
     public InventoryAdapter(Context context) {
@@ -35,12 +35,12 @@ public class InventoryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return InvnetoryPOJO.size();
+        return inventoryObject.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return InvnetoryPOJO.get(position);
+        return inventoryObject.get(position);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class InventoryAdapter extends BaseAdapter {
         ImageView image = (ImageView) row.findViewById(R.id.inventoryImage);
         Button saleOne = (Button) row.findViewById(R.id.inventorysaleButton);
 
-        final Inventory temp_obj = InvnetoryPOJO.get(position);
+        final Inventory temp_obj = inventoryObject.get(position);
         imgFile = new File(temp_obj.getImagePath());
         if (checkImageExists()) {
 

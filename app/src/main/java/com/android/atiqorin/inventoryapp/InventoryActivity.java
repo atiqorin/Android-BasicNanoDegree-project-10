@@ -25,7 +25,7 @@ public class InventoryActivity extends AppCompatActivity {
     DBHelper sqlHelper;
     Inventory data;
     File imgFile;
-    ArrayList<Inventory> dataFromPOJO;
+    ArrayList<Inventory> dataFromObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,8 @@ public class InventoryActivity extends AppCompatActivity {
         }
     }
     public void reSyncView() {
-        dataFromPOJO = sqlHelper.getrowInventory(id);
-        data = dataFromPOJO.get(0);
+        dataFromObject = sqlHelper.getrowInventory(id);
+        data = dataFromObject.get(0);
 
         title.setText("Name: " + data.getName());
         quantity.setText("Quantity: " + data.getQuantity());
@@ -76,15 +76,15 @@ public class InventoryActivity extends AppCompatActivity {
 
         emailIntent.setType("plain/text");
         emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{data.getEmail()});
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Order MOre item");
-        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "We want some more of this item" + data.getName());
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Order More item");
+        emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Please add some more items" + data.getName());
 
         this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
     }
     public void deleteThisItem(View v) {
         new AlertDialog.Builder(this)
-                .setTitle("Add Products?")
-                .setMessage("Enter Specific Details?")
+                .setTitle("Add Products")
+                .setMessage("Enter Specific Details")
                 .setPositiveButton("Delete Current Item", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -96,7 +96,7 @@ public class InventoryActivity extends AppCompatActivity {
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(InventoryActivity.this, "Item deletion cancelled", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InventoryActivity.this, "Item delete cancelled", Toast.LENGTH_SHORT).show();
                     }
                 }).create().show();
     }
